@@ -38,7 +38,7 @@ jobs:
               exit 1
             fi
           done
-          if [ "$EXAM_CODE" != "005" ] || [ "$MYSQL_DATABASE" != "ptit_hrm_db" ]; then
+          if [ "$EXAM_CODE" != "004" ] || [ "$MYSQL_DATABASE" != "ptit_inventory_db" ]; then
             echo "::error file=student.env::Không được sửa EXAM_CODE và MYSQL_DATABASE"
             exit 1
           fi
@@ -65,8 +65,8 @@ jobs:
         run: |
           set -a; source student.env; set +a
           BASE="http://localhost:${APP_PORT}"
-          # Kiểm tra endpoint $BASE/api/employees trả về JSON (CÓ SẴN, lỗi -> pipeline FAIL)
-          curl -fsS --retry 12 --retry-delay 5 --retry-all-errors "$BASE/api/employees" | grep -q '"id"'
+          # Kiểm tra endpoint $BASE/api/items trả về JSON (CÓ SẴN, lỗi -> pipeline FAIL)
+          curl -fsS --retry 12 --retry-delay 5 --retry-all-errors "$BASE/api/items" | grep -q '"id"'
           echo "Smoke test OK"
 
       - name: In log khi lỗi
